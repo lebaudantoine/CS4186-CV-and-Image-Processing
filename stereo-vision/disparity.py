@@ -34,3 +34,9 @@ def draw_lines(img1, img2, lines, pts1, pts2):
         img1 = cv2.circle(img1, tuple(pt1), 12, color, -1)
         img2 = cv2.circle(img2, tuple(pt2), 12, color, -1)
     return img1, img2
+
+
+def find_and_draw_epipolar_lines(img1, img2, pts1, pts2, fundamental_matrix):
+    lines1 = cv2.computeCorrespondEpilines(pts2.reshape(-1, 1, 2), 2, fundamental_matrix)
+    lines1 = lines1.reshape(-1, 3)
+    return draw_lines(img1, img2, lines1, pts1[0:5], pts2[0:5])
